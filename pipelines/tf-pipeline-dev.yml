@@ -19,8 +19,8 @@ variables:
 
 # Define the pool based on the agent type (Microsoft-hosted or Self-hosted).
 pool:
-  # vmImage: $(vmImage)  # Use this for Microsoft-hosted agents.
-  name: $(selfHostedPoolName)  # Use this for self-hosted agents.
+  vmImage: $(vmImage)  # Use this for Microsoft-hosted agents.
+  # name: $(selfHostedPoolName)  # Use this for self-hosted agents.
 
 stages:
   - stage: TerraformLintSecurityScan
