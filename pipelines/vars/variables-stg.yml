@@ -1,0 +1,13 @@
+variables:
+  vmImage: 'ubuntu-latest'
+  selfHostedPoolName: 'cmd-sh-agent-linux-nonprod'
+  terraformVersion: '1.12.1'
+  terraformDir: '$(System.DefaultWorkingDirectory)/terraform/code'
+  environmentServiceNameAzureRM: 'Case Management Datastore (Non Production)'
+  backendServiceArm: 'Case Management Datastore (Non Production)'
+  backendResourceGroup: 'rg-cmd-tfstate-nonprod-01'
+  backendStorageAccount: 'stcmdtfstatenonprod01'
+  backendContainer: 'tfstate'
+  backendKey: 'cmd-tsm-stg.tfstate'
+  environment: 'stg'
+  planArtifact: 'terraform-plan'

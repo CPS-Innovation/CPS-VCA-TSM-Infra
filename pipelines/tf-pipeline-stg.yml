@@ -1,0 +1,66 @@
+trigger: none
+
+resources:
+  repositories:
+    - repository: templaterepo
+      type: git
+      name: devops-templates
+      ref: refs/heads/main  # Specific branch or a tag.
+
+parameters:
+- name: TF_Apply
+  displayName: Run Terraform Apply
+  type: boolean
+  default: false
+
+variables:
+  - template: ./vars/variables-stg.yml # Update variable template path as needed.
+  - group: tf-module-access
+
+# Define the pool based on the agent type (Microsoft-hosted or Self-hosted).
+pool:
+  # vmImage: $(vmImage)  # Use this for Microsoft-hosted agents.
+  name: $(selfHostedPoolName)  # Use this for self-hosted agents.
+
+stages:
+  - stage: TerraformLintSecurityScan
+    displayName: Lint & Security Scan
+    jobs:
+      - template: templates/stage/terraform-lint-security.yml@templaterepo
+        parameters:
+          terraformDir: $(terraformDir)
+          terraformVersion: $(terraformVersion)
+
+  - stage: TerraformValidatePlan
+    displayName: Validate & Plan
+    jobs:
+      - template: templates/stage/terraform-validate-plan.yml@templaterepo
+        parameters:
+          terraformDir: $(terraformDir)
+          terraformVersion: $(terraformVersion)
+          backendServiceArm: $(backendServiceArm)
+          backendResourceGroup: $(backendResourceGroup)
+          backendStorageAccount: $(backendStorageAccount)
+          backendContainer: $(backendContainer)
+          backendKey: $(backendKey)
+          environmentServiceNameAzureRM: $(environmentServiceNameAzureRM)
+          environment: $(environment)
+          planArtifact: $(planArtifact)
+
+  - stage: TerraformApply
+    displayName: Terraform Apply
+    dependsOn: TerraformValidatePlan
+    condition: and(succeeded(), eq(${{ parameters.TF_Apply }}, true))
+    jobs:
+      - template: templates/stage/terraform-apply.yml@templaterepo
+        parameters:
+          terraformDir: $(terraformDir)
+          terraformVersion: $(terraformVersion)
+          backendServiceArm: $(backendServiceArm)
+          backendResourceGroup: $(backendResourceGroup)
+          backendStorageAccount: $(backendStorageAccount)
+          backendContainer: $(backendContainer)
+          backendKey: $(backendKey)
+          environmentServiceNameAzureRM: $(environmentServiceNameAzureRM)
+          environment: $(environment)
+          planArtifact: $(planArtifact)

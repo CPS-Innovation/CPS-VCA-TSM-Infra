@@ -1,0 +1,13 @@
+variables:
+  vmImage: 'ubuntu-latest'
+  selfHostedPoolName: 'cmd-sh-agent-linux-prod'
+  terraformVersion: '1.12.1'
+  terraformDir: '$(System.DefaultWorkingDirectory)/terraform/code'
+  environmentServiceNameAzureRM: 'Case Management Datastore (Production)'
+  backendServiceArm: 'Case Management Datastore (Production)'
+  backendResourceGroup: 'rg-cmd-tfstate-prod-01'
+  backendStorageAccount: 'stcmdtfstateprod01'
+  backendContainer: 'tfstate'
+  backendKey: 'cmd-tsm-prd.tfstate'
+  environment: 'prd'
+  planArtifact: 'terraform-plan'
