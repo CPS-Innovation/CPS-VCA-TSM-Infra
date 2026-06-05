@@ -65,13 +65,13 @@ resource "azurerm_private_endpoint" "func-pe-rp" {
   tags                = module.tags.keyvalues
 
   private_service_connection {
-    name                           = "psc-fa-vca-app-tsm-${var.environment}-01"
+    name                           = "psc-fa-vca-app-tsm-rp-${var.environment}-01"
     private_connection_resource_id = azurerm_linux_function_app.vcatsm-func-rp.id
     is_manual_connection           = false
     subresource_names              = ["sites"]
   }
 
-  custom_network_interface_name = "nic-pe-fa-vca-app-tsm-${var.environment}-01"
+  custom_network_interface_name = "nic-pe-fa-vca-app-tsm-rp-${var.environment}-01"
 
   depends_on = [azurerm_linux_function_app.vcatsm-func-rp]
 }
