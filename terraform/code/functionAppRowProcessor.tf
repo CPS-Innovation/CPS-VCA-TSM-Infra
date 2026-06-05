@@ -1,5 +1,5 @@
-resource "azurerm_linux_function_app" "vcatsm-func" {
-  name                          = "fa-vca-app-tsm-${var.environment}-01"
+resource "azurerm_linux_function_app" "vcatsm-func-rp" {
+  name                          = "fa-vca-app-tsm-rp-${var.environment}-01"
   resource_group_name           = azurerm_resource_group.rg.name
   location                      = azurerm_resource_group.rg.location
   service_plan_id               = data.azurerm_app_service_plan.shared_asp.id
@@ -66,12 +66,12 @@ resource "azurerm_private_endpoint" "func_pe" {
 
   private_service_connection {
     name                           = "psc-fa-vca-app-tsm-${var.environment}-01"
-    private_connection_resource_id = azurerm_linux_function_app.vcatsm-func.id
+    private_connection_resource_id = azurerm_linux_function_app.vcatsm-func-rp.id
     is_manual_connection           = false
     subresource_names              = ["sites"]
   }
 
   custom_network_interface_name = "nic-pe-fa-vca-app-tsm-${var.environment}-01"
 
-  depends_on = [azurerm_linux_function_app.vcatsm-func]
+  depends_on = [azurerm_linux_function_app.vcatsm-func-rp]
 }
