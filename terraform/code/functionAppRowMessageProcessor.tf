@@ -11,7 +11,7 @@ resource "azurerm_linux_function_app" "vcatsm-func-mp" {
   https_only                    = true
   tags                          = module.tags.keyvalues
   app_settings = {
-    "APPINSIGHTS_INSTRUMENTATIONKEY" = azurerm_application_insights.vcatsm_ai.instrumentation_key
+    "APPINSIGHTS_INSTRUMENTATIONKEY" = azurerm_application_insights.vcatsm-ai-mp.instrumentation_key
     "CmsBaseUri"                     = "${var.cms_uri}/CMS.24.0.01"
     "CmsModernBaseUri"               = var.cms_uri
     "FUNCTIONS_EXTENSION_VERSION"    = "~4"
@@ -58,7 +58,7 @@ resource "azurerm_linux_function_app" "vcatsm-func-mp" {
 }
 
 resource "azurerm_private_endpoint" "func-pe-mp" {
-  name                = "pe-fa-vca-app-tsm-${var.environment}-01"
+  name                = "pe-fa-vca-app-tsm-mp-${var.environment}-01"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   subnet_id           = data.azurerm_subnet.asp_shrd_pe_subnet.id
