@@ -57,7 +57,7 @@ resource "azurerm_linux_function_app" "vcatsm-func-mp" {
 
 }
 
-resource "azurerm_private_endpoint" "func_pe" {
+resource "azurerm_private_endpoint" "func-pe-mp" {
   name                = "pe-fa-vca-app-tsm-${var.environment}-01"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
