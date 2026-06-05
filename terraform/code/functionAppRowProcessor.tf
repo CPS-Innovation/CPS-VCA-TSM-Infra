@@ -11,7 +11,7 @@ resource "azurerm_linux_function_app" "vcatsm-func-rp" {
   https_only                    = true
   tags                          = module.tags.keyvalues
   app_settings = {
-    "APPINSIGHTS_INSTRUMENTATIONKEY" = azurerm_application_insights.vcatsm-ai-rp.instrumentation_key  
+    "APPINSIGHTS_INSTRUMENTATIONKEY" = azurerm_application_insights.vcatsm-ai-rp.instrumentation_key
     "CmsBaseUri"                     = "${var.cms_uri}/CMS.24.0.01"
     "CmsModernBaseUri"               = var.cms_uri
     "FUNCTIONS_EXTENSION_VERSION"    = "~4"
