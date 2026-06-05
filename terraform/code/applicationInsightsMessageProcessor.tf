@@ -7,7 +7,7 @@ resource "azurerm_application_insights" "vcatsm-ai-mp" {
   tags                = module.tags.keyvalues
 }
 
-output "instrumentation_key" {
+output "instrumentation_key_mp" {
   value     = azurerm_application_insights.vcatsm-ai-mp.instrumentation_key
   sensitive = true
 }
